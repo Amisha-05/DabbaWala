@@ -47,16 +47,16 @@ app.use(bodyParser.json());
 
 // chat notification
 app.post('/api/booking-notification', async (req, res) => {
-   const { phoneNumber, orderDetails, orderDate, userPhone } = req.body;
-   console.log(req.body)
+   const { phoneNumber, orderDetails, orderDate, userPhone, userName } = req.body;
+   console.log(req.body);
 
-   if (!phoneNumber || !orderDetails || !orderDate || !userPhone) {
+   if (!phoneNumber || !orderDetails || !orderDate || !userPhone || !userName) {
       return res.status(400).json({ error: 'Invalid request. Phone number and details are required.' });
    }
 
    try {
       // 917021578746@c.us
-      await bookingNotification(phoneNumber, orderDetails, orderDate, userPhone);
+      await bookingNotification(phoneNumber, orderDetails, orderDate, userPhone, userName);
 
       res.status(200).json({ success: true, message: 'Booking notification sent successfully.' });
    } catch (error) {
@@ -66,10 +66,10 @@ app.post('/api/booking-notification', async (req, res) => {
 });
 
 
-async function bookingNotification(phoneNumber, orderDetails, orderDate, userPhone) {
+async function bookingNotification(phoneNumber, orderDetails, orderDate, userPhone, userName) {
    try {
       const chatNum = `91${phoneNumber}@c.us`
-      const textmsg = `You have a new order just now from a User, Number is : ${userPhone}, Order Date : ${orderDate} and details are : ${orderDetails}`
+      const textmsg = `You have a new order just now from a ${userName}, Mobile Number is : ${userPhone}, Order Date : ${orderDate} and details are : ${orderDetails}`
       await client.sendMessage(chatNum, textmsg);
       console.log("done")
    } catch (error) {

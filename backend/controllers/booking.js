@@ -1,7 +1,7 @@
 import Booking from "../models/Booking.js";
 import User from "../models/User.js"
 import Dabbawala from "../models/Dabbawala.js";
-// import axios from "axios";
+import axios from "axios";
 
 export const createBooking = async (req, res, next) => {
   try {
@@ -14,19 +14,21 @@ export const createBooking = async (req, res, next) => {
     
     await booking.save();
     // console.log(booking);
-    // console.log("1")
+    console.log("1")
 
-    // // whatsapp notification alert
+    // whatsapp notification alert
 
-    // const bookingData = {
-    //     phoneNumber: dabbawala.phone,
-    //     orderDetails: booking.mealType,
-    //     orderDate : booking.subscriptionStartDate,
-    //     userPhone: user.phone
-    // };
-    // console.log(bookingData)
+    const bookingData = {
+        phoneNumber: dabbawala.phone,
+        orderDetails: booking.mealType,
+        orderDate : booking.subscriptionStartDate,
+        userPhone: user.phone,
+        userName: user.name
+    };
+    console.log(bookingData)
 
-    // const resul = await axios.post('http://localhost:8801/api/booking-notification', bookingData);
+    const resul = await axios.post('http://localhost:8801/api/booking-notification', bookingData);
+    console.log(resul);
 
     res.status(201).json(booking);
   } catch (err) {
