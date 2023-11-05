@@ -8,6 +8,9 @@ backend/node_modules
 node_modules
 .wwebjs_auth
 .wwebjs_cache
+.env
+backend/uploads
+orders.csv
 
 # testing
 /coverage
